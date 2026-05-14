@@ -8,7 +8,7 @@ This folder contains comprehensive design documentation for the HRMS (Human Reso
 
 | # | Document | Description |
 |---|----------|-------------|
-| 01 | [System Architecture](./01-SYSTEM-ARCHITECTURE.md) | High-level architecture, tech stack, and deployment strategy |
+| 01 | [System Architecture](./01-SYSTEM-ARCHITECTURE.md) | Plesk/VPS-friendly stack, scaling without hyperscalers, deployment |
 | 02 | [Database Design](./02-DATABASE-DESIGN.md) | Complete database schema with ERD diagrams |
 | 03 | [API Design](./03-API-DESIGN.md) | RESTful API specifications and endpoints |
 | 04 | [Authentication & RBAC](./04-AUTH-RBAC-DESIGN.md) | Security, authentication flow, and permission system |

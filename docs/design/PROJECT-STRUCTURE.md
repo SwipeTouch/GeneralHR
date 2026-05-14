@@ -48,15 +48,15 @@ hrms/
 │   ├── seed-tenant.ts
 │   └── migrate.sh
 │
-├── docker/                           # Docker configurations
+├── docker/                           # Optional: local/dev container configs
 │   ├── api.Dockerfile
 │   ├── web.Dockerfile
 │   └── nginx.conf
 │
 ├── .env.example                      # Environment variables template
 ├── .gitignore
-├── docker-compose.yml                # Local development setup
-├── docker-compose.prod.yml           # Production setup
+├── docker-compose.yml                # Optional: local development (e.g. MySQL only)
+├── docker-compose.prod.yml           # Optional: only if you choose containerized prod
 ├── package.json                      # Root package.json (workspaces)
 ├── tsconfig.base.json               # Shared TypeScript config
 └── README.md
@@ -236,18 +236,19 @@ apps/api/
 │   │   ├── storage/
 │   │   │   ├── storage.service.ts
 │   │   │   ├── local.provider.ts
-│   │   │   ├── s3.provider.ts
+│   │   │   ├── s3-compatible.provider.ts  # optional later; not default on Plesk
 │   │   │   └── index.ts
 │   │   │
-│   │   ├── queue/
-│   │   │   ├── queue.service.ts
+│   │   ├── jobs/
+│   │   │   ├── job.service.ts
 │   │   │   ├── workers/
 │   │   │   │   ├── email.worker.ts
 │   │   │   │   └── notification.worker.ts
 │   │   │   └── index.ts
 │   │   │
-│   │   ├── cache/
+│   │   ├── cache/                    # optional when Redis is configured
 │   │   │   ├── redis.ts
+│   │   │   ├── memory-cache.ts
 │   │   │   ├── cache.service.ts
 │   │   │   └── index.ts
 │   │   │

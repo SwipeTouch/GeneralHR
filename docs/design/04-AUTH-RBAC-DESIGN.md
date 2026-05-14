@@ -4,6 +4,8 @@
 
 The HRMS application uses JWT-based authentication with a granular Role-Based Access Control (RBAC) system. This document details the security architecture, authentication flow, and permission model.
 
+**Hosting note:** Refresh tokens and rate-limit stores may use **Redis** when available; on Plesk-only stacks they can be stored in **MySQL** instead. Diagrams that mention Redis assume the optional component.
+
 ## 2. Authentication Architecture
 
 ### 2.1 Token Strategy
@@ -28,7 +30,7 @@ The HRMS application uses JWT-based authentication with a granular Role-Based Ac
 ├─────────────────────────────────────────────────────────────────┤
 │  • Long-lived (7 days)                                          │
 │  • Contains: userId, tokenId (for revocation)                   │
-│  • Stored in Redis for validation                               │
+│  • Stored in Redis **or** MySQL for validation (see system architecture)      │
 │  • Sent as HttpOnly cookie or in request body                   │
 │  • Used only for obtaining new access tokens                    │
 │  • Token rotation on each refresh                               │

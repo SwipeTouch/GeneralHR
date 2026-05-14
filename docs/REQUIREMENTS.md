@@ -4,6 +4,8 @@
 
 A multi-tenant SaaS HRMS (Human Resource Management System) application covering the complete employee lifecycle from recruitment to exit. The system provides configurable workflows, granular Role-Based Access Control (RBAC), and integration capabilities for external systems like payroll.
 
+The reference deployment is **generic Linux hosting with Plesk** (for example Hostinger VPS): Node.js, MySQL, SMTP, and local file storage—**without** dependency on AWS or similar hyperscalers. The same design scales to multiple tenants and, when needed, multiple servers on any VPS provider.
+
 ### 1.1 Key Business Objectives
 
 - Streamline hiring process from candidate application to onboarding
@@ -26,8 +28,8 @@ A multi-tenant SaaS HRMS (Human Resource Management System) application covering
 | **HR Portal** | Administrative interface for employee and leave management |
 | **Employee Portal** | Self-service for employees to manage profile, leaves, documents |
 | **Lifetime Portal** | Ex-employee access to historical documents and certificates |
-| **API Gateway** | Central entry point for all API requests |
-| **Background Workers** | Async job processing for emails, notifications, reports |
+| **API** | REST API served by Node (Express); reverse-proxied by Apache/NGINX (e.g. Plesk) |
+| **Background work** | Emails and heavy tasks: start in-process or DB-backed jobs; optional Redis later |
 
 ### 2.2 Multi-Tenant Architecture
 
@@ -38,18 +40,22 @@ A multi-tenant SaaS HRMS (Human Resource Management System) application covering
 
 ### 2.3 Technology Stack
 
-| Layer | Technology | Version |
-|-------|------------|---------|
+**Default deployment profile:** Linux VPS or shared hosting with **Plesk** (e.g. Hostinger)—**no AWS or hyperscaler required**. Optional components apply when the host provides them or you add a small VPS service.
+
+| Layer | Technology | Version / notes |
+|-------|------------|-----------------|
 | Frontend | React + TypeScript | 18.x |
 | State Management | Zustand | 4.x |
 | UI Framework | Ant Design | 5.x |
 | Backend | Node.js + Express | 20.x LTS |
 | ORM | Prisma | 5.x |
-| Database | MySQL | 8.x |
-| Cache | Redis | 7.x |
-| Queue | BullMQ | 4.x |
-| File Storage | AWS S3 / MinIO | - |
-| Email | SendGrid / AWS SES | - |
+| Database | MySQL / MariaDB | Per host (8.x preferred) |
+| Process manager | PM2 (or Plesk Node.js) | Restarts, optional cluster |
+| Cache (optional) | Redis or in-memory LRU | When multi-process or high traffic |
+| Background jobs (optional) | DB job table or Redis queue | Start simple; no BullMQ required |
+| File Storage | **Local disk** outside web root + signed URLs | Backups via panel or cron |
+| Email | **SMTP** (hosting provider or any relay) | e.g. nodemailer; SendGrid optional later |
+| Dev only | Docker Compose | Local MySQL; not required in production |
 
 ---
 
@@ -62,7 +68,7 @@ A multi-tenant SaaS HRMS (Human Resource Management System) application covering
 - JWT-based authentication with access and refresh tokens
 - Multi-tenant login with tenant resolution from subdomain
 - Password reset via email
-- Session management with Redis
+- Session / refresh token storage: **MySQL** by default; **Redis** optional when available
 - Granular RBAC with CRUD permissions per menu item
 
 #### 3.1.2 User Types
@@ -1512,17 +1518,16 @@ GET    /api/v1/admin/menu-items
 
 ### 8.2 Email Service
 
-- SendGrid / AWS SES integration
+- **SMTP** via hosting panel (Plesk) or any SMTP relay
 - Template-based email sending
-- Email tracking (delivered, opened)
-- Bounce handling
+- Optional: third-party transactional API (SendGrid, etc.) if you add it later
+- Email tracking and bounce handling as enhancements
 
 ### 8.3 File Storage
 
-- AWS S3 / MinIO for document storage
-- Pre-signed URLs for secure access
-- File type validation
-- Virus scanning
+- **Server filesystem** for document storage (non-public path); authenticated or signed download URLs
+- File type and size validation
+- Virus scanning when the host provides it or via optional integration
 
 ### 8.4 Calendar (Future)
 
@@ -1544,12 +1549,10 @@ GET    /api/v1/admin/menu-items
 
 ### 9.2 Infrastructure
 
-- Containerized deployment (Docker)
-- Kubernetes orchestration (optional)
-- Load balancer for API
-- CDN for static assets
-- Managed MySQL (RDS/PlanetScale)
-- Managed Redis (ElastiCache)
+- **Production:** Plesk (or similar) on a VPS: Apache/NGINX, Node.js app, MySQL, SMTP, PM2 optional
+- **Scaling:** vertical (larger VPS) → PM2 cluster → multiple app servers + load balancer (HAProxy/NGINX) on any provider—still no AWS requirement
+- **Static UI:** built React assets served by the web server; optional CDN is a generic HTTP cache, not vendor-specific
+- **Database / cache:** bundled MySQL on host; optional Redis on same or separate small VPS
 
 ### 9.3 CI/CD
 

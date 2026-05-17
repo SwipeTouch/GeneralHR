@@ -1,43 +1,37 @@
-# HRMS Application - Design Documentation Index
+# GeneralHR — Design Index (Minimal Scope)
 
-## Overview
+## Product summary
 
-This folder contains comprehensive design documentation for the HRMS (Human Resource Management System) application. Please review each document in order before implementation begins.
+A **minimal** multi-tenant HR application:
 
-## Document Structure
+1. **Recruitment** — Candidate list with status and timestamped comments; export; simple document upload for offered candidates.
+2. **HR** — Same candidate list with document-upload visibility; admin unlock for locked uploads.
+3. **Staff & attendance** — Employee entry (single or bulk); attendance via biometric hook, manual entry, or file upload.
+4. **Compensation** — Configurable salary structure heads and per-employee amounts with calculation preview.
+5. **Payroll** — Pluggable integration with an **existing PHP payroll system** (not built here).
+
+No hiring workflows, leave management, exit portals, or lifetime access in this scope.
+
+## Documents
 
 | # | Document | Description |
 |---|----------|-------------|
-| 01 | [System Architecture](./01-SYSTEM-ARCHITECTURE.md) | Plesk/VPS-friendly stack, scaling without hyperscalers, deployment |
-| 02 | [Database Design](./02-DATABASE-DESIGN.md) | Complete database schema with ERD diagrams |
-| 03 | [API Design](./03-API-DESIGN.md) | RESTful API specifications and endpoints |
-| 04 | [Authentication & RBAC](./04-AUTH-RBAC-DESIGN.md) | Security, authentication flow, and permission system |
-| 05 | [Recruitment Module](./05-RECRUITMENT-MODULE.md) | Hiring workflow and case management design |
-| 06 | [HR Module](./06-HR-MODULE.md) | Employee and leave management design |
-| 07 | [Employee Portal](./07-EMPLOYEE-PORTAL.md) | Self-service portal design |
-| 08 | [Exit Management](./08-EXIT-MODULE.md) | Exit workflow and lifetime portal design |
-| 09 | [Configuration System](./09-CONFIGURATION-SYSTEM.md) | Tenant configuration and customization design |
-| 10 | [Frontend Architecture](./10-FRONTEND-ARCHITECTURE.md) | React component structure and state management |
-| 11 | [Multi-Tenancy Design](./11-MULTI-TENANCY.md) | Tenant isolation and customization strategy |
+| 01 | [System Architecture](./01-SYSTEM-ARCHITECTURE.md) | Stack, deployment (Plesk/VPS), modules at a glance |
+| 02 | [Database Design](./02-DATABASE-DESIGN.md) | Tables and relationships for minimal scope |
+| 03 | [API Design](./03-API-DESIGN.md) | REST endpoints |
+| 04 | [Recruitment Module](./04-RECRUITMENT-MODULE.md) | Candidates, comments, uploads, export |
+| 05 | [Staff & Attendance](./05-STAFF-ATTENDANCE.md) | Employees, bulk import, attendance sources |
+| 06 | [Compensation & Payroll](./06-COMPENSATION-PAYROLL.md) | Salary heads, calculation, PHP payroll plug-in |
+| 07 | [Auth & Roles](./07-AUTH-ROLES.md) | Simple roles and permissions |
 
-## Quick Links
+## Archive
 
-- [Requirements Document](../REQUIREMENTS.md) - Full requirements specification
-- [Project Structure](./PROJECT-STRUCTURE.md) - Folder and file organization
+Full v1 design: [../archive/v1-full-hrms/](../archive/v1-full-hrms/)
 
-## Review Checklist
+## Review checklist
 
-Before approving the design, please verify:
-
-- [ ] System architecture meets scalability requirements
-- [ ] Database schema covers all entities and relationships
-- [ ] API design follows RESTful conventions
-- [ ] RBAC model provides required granularity
-- [ ] Workflows match business requirements
-- [ ] Multi-tenancy strategy is appropriate
-- [ ] Frontend structure supports all portals
-- [ ] Configuration system enables required flexibility
-
-## Feedback
-
-Please provide feedback on each document. Once approved, implementation will begin following the phased approach outlined in the architecture document.
+- [ ] Candidate statuses and comment model match business needs
+- [ ] Upload lock / admin unlock behavior is clear
+- [ ] Attendance import assumptions are acceptable for v1
+- [ ] Salary head model supports your payroll handoff
+- [ ] PHP payroll integration boundaries are clear

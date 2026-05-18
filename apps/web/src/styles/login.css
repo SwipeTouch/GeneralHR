@@ -1,0 +1,94 @@
+.ghr-login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 900px) {
+  .ghr-login-page {
+    grid-template-columns: 1fr;
+  }
+  .ghr-login-brand {
+    display: none;
+  }
+}
+
+.ghr-login-brand {
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #0f172a 100%);
+  color: #f8fafc;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ghr-login-brand h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.ghr-login-brand p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+.ghr-login-features {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ghr-login-feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ghr-login-feature-desc {
+  color: #94a3b8;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.ghr-login-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ghr-login-feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgb(37 99 235 / 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.ghr-login-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: #f8fafc;
+}
+
+.ghr-login-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgb(15 23 42 / 8%);
+  border: 1px solid #e2e8f0;
+}
+
+.ghr-login-card .ant-card-body {
+  padding: 32px;
+}

@@ -1,0 +1,39 @@
+# Local development only — run MySQL without installing it on your Mac.
+# Usage: docker compose up -d
+# Stop:  docker compose down
+# Data persists in volume hrms_mysql_data
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hrms-mysql-dev
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: hrms_dev_root
+      MYSQL_DATABASE: hrms
+      MYSQL_USER: hrms
+      MYSQL_PASSWORD: hrms_dev
+    volumes:
+      - hrms_mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uhrms", "-phrms_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Optional: web UI to browse tables (http://localhost:8080)
+  adminer:
+    image: adminer:4
+    container_name: hrms-adminer-dev
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  hrms_mysql_data:

@@ -2,13 +2,14 @@
   "name": "hrms",
   "version": "1.0.0",
   "private": true,
-  "description": "Multi-tenant HRMS SaaS Application",
+  "description": "GeneralHR — minimal HR application",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev": "npm run dev:web",
+    "dev:all": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
     "dev:api": "npm run dev --workspace=@hrms/api",
     "dev:web": "npm run dev --workspace=@hrms/web",
     "build": "npm run build --workspaces",
@@ -20,10 +21,14 @@
     "db:push": "npm run db:push --workspace=@hrms/api",
     "db:migrate": "npm run db:migrate --workspace=@hrms/api",
     "db:seed": "npm run db:seed --workspace=@hrms/api",
+    "db:studio": "npm run db:studio --workspace=@hrms/api",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
     "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "dotenv-cli": "^7.4.2",
     "typescript": "^5.4.5"
   },
   "engines": {

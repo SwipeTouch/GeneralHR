@@ -1,0 +1,51 @@
+:root {
+  --ghr-sidebar-bg: #0f172a;
+  --ghr-sidebar-hover: #1e293b;
+  --ghr-accent: #2563eb;
+  --ghr-page-bg: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--ghr-page-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ghr-page {
+  padding: 0;
+}
+
+.ghr-page-header {
+  margin-bottom: 24px;
+}
+
+.ghr-stat-card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 8%);
+}
+
+.ghr-comment-timeline .ant-timeline-item-content {
+  margin-bottom: 8px;
+}
+
+.ghr-portal-shell {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ghr-portal-card {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 40%);
+}
